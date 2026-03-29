@@ -2,30 +2,37 @@
 <html>
 <head>
     <title>Login</title>
+    <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
 </head>
-<body>
-    <h2>Login</h2>
+<body class="p-10 flex justify-center item-center mt-10">
 
-    @if ($errors->any())
-        <div style="color:red;">
-            {{ $errors->first() }}
-        </div>
-    @endif
+    <div class="border p-4 w-72">
+        <h2 class="mb-4">Login</h2>
 
-    <form method="POST" action="/login">
-        @csrf
+        @if ($errors->any())
+            <div class="border mb-3 p-2">
+                {{ $errors->first() }}
+            </div>
+        @endif
 
-        <div>
-            <label>Email</label>
-            <input type="email" name="email" required>
-        </div>
+        <form method="POST" action="/login" class="space-y-3">
+            @csrf
 
-        <div>
-            <label>Password</label>
-            <input type="password" name="password" required>
-        </div>
+            <div class="border p-2">
+                <label class="block">Email</label>
+                <input type="email" name="email" required class="w-full border mt-1">
+            </div>
 
-        <button type="submit">Login</button>
-    </form>
+            <div class="border p-2">
+                <label class="block">Password</label>
+                <input type="password" name="password" required class="w-full border mt-1">
+            </div>
+
+            <button type="submit" class="border p-2 w-full">
+                Login
+            </button>
+        </form>
+    </div>
+
 </body>
 </html>
