@@ -15,6 +15,7 @@ class SuperAdminSeeder extends Seeder
             'email' => 'superadmin@perpus.com',
             'password' => Hash::make('password123'),
             'role' => 'super_admin',
+            'status'=> 'active',
         ]);
     }
 }
