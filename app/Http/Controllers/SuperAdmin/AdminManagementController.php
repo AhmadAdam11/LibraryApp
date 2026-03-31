@@ -25,6 +25,7 @@ class AdminManagementController extends Controller
             'email' => $request->email,
             'password' => Hash::make($request->password),
             'role' => 'admin',
+            'status' => 'active',
         ]);
 
         return redirect('super-admin/admin/create')->with('success', 'admin succesfully added');
