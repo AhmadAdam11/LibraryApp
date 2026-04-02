@@ -56,6 +56,21 @@
                 </div>
 
                 <div>
+                <label class="block text-sm font-bold text-gray-800 mb-1.5 ml-1">NISN</label>
+                <div class="flex items-center border border-gray-200 rounded-full px-4 py-2.5 focus-within:border-blue-300 focus-within:ring-2 focus-within:ring-blue-100">
+                    <input
+                    type="text"
+                    name="nisn"
+                    required
+                    pattern="[0-9]{10}"
+                    maxlength="10"
+                    class="w-full text-sm text-gray-500 placeholder-gray-400 outline-none bg-transparent"
+                    placeholder="10 digit"
+                    >
+                </div>
+            </div>
+
+                <div>
                     <label class="block text-sm font-bold text-gray-800 mb-1.5 ml-1">Password</label>
                     <div class="flex items-center border border-gray-200 rounded-full px-4 py-2.5 focus-within:border-blue-300 focus-within:ring-2 focus-within:ring-blue-100">
                         <input

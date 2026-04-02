@@ -27,27 +27,27 @@ class AuthController extends Controller
 
             $user = Auth::user();
 
-        if ($user->status !== 'active') {
-            Auth::logout();
+            if ($user->status !== 'active') {
+                Auth::logout();
 
-            return back()->withErrors([
-                'email'=> 'Your accoount is inactive'
-            ]);
+                return back()->withErrors([
+                    'email'=> 'Your account is inactive'
+                ]);
+            }
+
+            $redirectMap = [
+                'super_admin' => '/super-admin/dashboard',
+                'admin' => '/admin/dashboard',
+                'user' => '/user/dashboard',
+            ];
+
+            return redirect($redirectMap[$user->role] ?? '/login');
         }
 
-        if ($user->role === 'super_admin') {
-            return redirect('/super-admin/dashboard');
-        } elseif ($user->role === 'admin') {
-            return redirect('/admin/dashboard');
-        } elseif ($user->role === 'user') {
-            return redirect('/user/dashboard');
-        }
-        
-        }
         return back()->withErrors([
-        'email' => 'Email atau password salah.',
+            'email' => 'Email atau password salah.',
         ]);
-
+        
     }
 
     public function logout(Request $request){
@@ -67,6 +67,7 @@ class AuthController extends Controller
             'name' => 'required',
             'email' => 'required|email|unique:users',
             'password' => 'required|min:6',
+            'nisn' => 'required|numeric|digits:10|unique:users'
         ]);
 
         $user = User::create([
@@ -75,27 +76,11 @@ class AuthController extends Controller
             'password' => bcrypt($request->password),
             'role' => 'user',
             'status' => 'non-active',
-            'activation_token' => Str::random(60),
+            'nisn' => $request->nisn,
         ]);
 
-        Mail::to($user->email)->send(new ActivationMail($user->activation_token));
 
-        return redirect('/login')->with('success', 'account successfully created');
+        return redirect('/login')->with('success', 'Account successfully created. Please wait for admin approval.');
     }
 
-    public function activate($token) {
-        $user = User::where('activation_token', $token)->first();
-
-        if(!$user) {
-            return "Invalid token.";
-        }
-
-        $user->update([
-            'status' => 'active',
-            'activation_token' => null,
-        ]);
-
-        return "Account successfully activated. Please log in.";
-
-    }
 }

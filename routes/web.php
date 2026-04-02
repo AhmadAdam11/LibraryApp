@@ -4,6 +4,8 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\SuperAdmin\SuperDashboardController;
 use App\Http\Controllers\SuperAdmin\AdminManagementController;
+use App\Http\Controllers\Admin\DashboardAdminController;
+use App\Http\Controllers\Admin\UserManagementController;
 
 
 Route::get('/', function () {
@@ -12,7 +14,7 @@ Route::get('/', function () {
 
 Route::get('/register', [AuthController::class, 'showRegister']);
 Route::post('/register', [AuthController::class, 'register']);
-Route::get('/activate/{token}', [AuthController::class, 'activate']);
+// Route::get('/activate/{token}', [AuthController::class, 'activate']);
 
 Route::get('/login', [AuthController::class, 'showLogin'])->name('login');
 Route::post('/login', [AuthController::class, 'login']);
@@ -28,12 +30,20 @@ Route::prefix('super-admin')->middleware(['auth', 'role:super_admin'])->group(fu
     Route::post('/admin/{id}/destroy', [AdminManagementController::class, 'delete']);
 });
 
+
+Route::get('/admin/dashboard', [DashboardAdminController::class, 'index'])
+->middleware(['auth', 'role:admin']);
+
+Route::get('/admin/users', [UserManagementController::class, 'index'])
+    ->middleware(['auth', 'role:admin']);
+
+Route::post('/admin/users/{id}/activate', [UserManagementController::class, 'activate'])
+    ->middleware(['auth', 'role:admin']);
+
+Route::post('/admin/users/{id}/deactivate', [App\Http\Controllers\Admin\UserManagementController::class, 'deactivate'])
+    ->middleware(['auth', 'role:admin']);
+
 // DUMMY
-
-Route::get('/admin/dashboard', function () {
-    return "Dashboard Admin";
-})->middleware(['auth', 'role:admin']);
-
 Route::get('/user/dashboard', function () {
     return "Dashboard User";
 })->middleware(['auth', 'role:user']);

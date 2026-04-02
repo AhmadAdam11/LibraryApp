@@ -16,6 +16,12 @@
                 Login to your Perpus App account to continue
             </p>
 
+            @if(session('success'))
+                <div class="mb-4 p-3 bg-green-100 text-green-700 rounded">
+                    {{ session('success') }}
+                </div>
+            @endif
+
             @if ($errors->any())
                 <div class="mb-4 px-4 py-3 rounded-lg bg-red-50 border border-red-200 text-red-600 text-sm">
                     {{ $errors->first() }}

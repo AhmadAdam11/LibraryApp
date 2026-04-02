@@ -11,14 +11,14 @@
 <div class="flex">
 
     <div class="w-64 h-screen bg-gray-800 text-white p-5">
-        <h2 class="text-2xl font-bold mb-6">Super Admin</h2>
+        <h2 class="text-2xl font-bold mb-6">Admin</h2>
 
         <nav class="space-y-2">
-            <a href="/super-admin/dashboard" class="block px-3 py-2 rounded hover:bg-gray-700">
+            <a href="/admin/dashboard" class="block px-3 py-2 rounded hover:bg-gray-700">
                 Dashboard
             </a>
-            <a href="/super-admin/admin" class="block px-3 py-2 rounded hover:bg-gray-700">
-                List Admin
+            <a href="/admin/users" class="block px-3 py-2 rounded hover:bg-gray-700">
+                List User
             </a>
         </nav>
     </div>
