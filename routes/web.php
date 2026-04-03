@@ -6,6 +6,8 @@ use App\Http\Controllers\SuperAdmin\SuperDashboardController;
 use App\Http\Controllers\SuperAdmin\AdminManagementController;
 use App\Http\Controllers\Admin\DashboardAdminController;
 use App\Http\Controllers\Admin\UserManagementController;
+use App\Http\Controllers\Admin\BookController;
+use App\Http\Controllers\User\DashboardController;
 
 
 Route::get('/', function () {
@@ -31,6 +33,7 @@ Route::prefix('super-admin')->middleware(['auth', 'role:super_admin'])->group(fu
 });
 
 
+//Admin
 Route::get('/admin/dashboard', [DashboardAdminController::class, 'index'])
 ->middleware(['auth', 'role:admin']);
 
@@ -43,7 +46,18 @@ Route::post('/admin/users/{id}/activate', [UserManagementController::class, 'act
 Route::post('/admin/users/{id}/deactivate', [App\Http\Controllers\Admin\UserManagementController::class, 'deactivate'])
     ->middleware(['auth', 'role:admin']);
 
-// DUMMY
-Route::get('/user/dashboard', function () {
-    return "Dashboard User";
-})->middleware(['auth', 'role:user']);
+Route::prefix('admin')->middleware(['auth', 'role:admin'])->group(function () {
+    Route::resource('books', BookController::class);
+});
+
+
+
+
+
+
+
+
+//users
+
+Route::get('/user/dashboard', [DashboardController::class, 'index'])
+->middleware(['auth', 'role:user']);

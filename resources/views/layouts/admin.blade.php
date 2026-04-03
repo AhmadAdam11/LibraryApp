@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Super Admin</title>
+    <title>Admin</title>
     <script src="https://cdn.tailwindcss.com"></script>
 </head>
 <body class="bg-gray-100">
@@ -19,6 +19,9 @@
             </a>
             <a href="/admin/users" class="block px-3 py-2 rounded hover:bg-gray-700">
                 List User
+            </a>
+            <a href="/admin/books" class="block px-3 py-2 rounded hover:bg-gray-700">
+                List Book
             </a>
         </nav>
     </div>
