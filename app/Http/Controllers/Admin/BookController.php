@@ -11,7 +11,7 @@ use Illuminate\Support\Facades\Storage;
 class BookController extends Controller
 {  
     public function index() {
-    $books = Book::with('category')->latest()->get();
+    $books = Book::with('category', 'bookUnits')->latest()->get();
 
     return view('admin.books.index', compact('books'));
     }
@@ -103,6 +103,31 @@ class BookController extends Controller
             $book->delete();
 
             return redirect()->route('books.index')->with('success', 'The book has been successfully deleted');
+        }
+
+        public function addStock(Request $request, $id){
+            $request -> validate([
+                'amount' => 'required|integer|min:1',
+            ]);
+
+            $book = Book::findOrFail($id);
+
+            $amount = $request->amount;
+
+            $bookCode = 'BK' . str_pad($book->id, 3, '0', STR_PAD_LEFT);
+
+            $currentUnitCount = $book->bookUnits()->count();
+
+                for ($i = 1; $i <= $amount; $i++) {
+                \App\Models\BookUnit::create([
+                    'book_id' => $book->id,
+                    'unit_code' => $bookCode . '-' . str_pad($currentUnitCount + $i, 2, '0', STR_PAD_LEFT),
+                    'status' => 'available',
+                ]);
+            }
+
+
+            return back()->with('success', 'Stock berhasil ditambahkan');
         }
     }
     

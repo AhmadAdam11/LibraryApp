@@ -83,7 +83,7 @@
                     </div>
                 </div>
 
-                <button type="submit" class="w-full bg-slate-500 hover:bg-slate-600 text-white font-bold py-3 rounded-full transition-colors">
+                <button type="submit" class="w-full bg-gradient-to-b from-gray-900 to-gray-800 hover:bg-slate-600 text-white font-bold py-3 rounded-full transition-colors">
                     Sign Up
                 </button>
 

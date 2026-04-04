@@ -21,7 +21,7 @@ class Book extends Model
         return $this->belongsTo(Category::class);
     }
 
-    public function units() {
+    public function bookUnits() {
         return $this->hasMany(BookUnit::class);
     }
 

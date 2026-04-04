@@ -48,12 +48,13 @@ Route::post('/admin/users/{id}/deactivate', [App\Http\Controllers\Admin\UserMana
 
 Route::prefix('admin')->middleware(['auth', 'role:admin'])->group(function () {
     Route::resource('books', BookController::class);
+    Route::post('/books/{id}/add-stock', [BookController::class, 'addStock'])->name('books.addStock');
 });
 
 
-
-
-
+Route::post('/test', function () {
+    dd('TEMBUS');
+});
 
 
 
