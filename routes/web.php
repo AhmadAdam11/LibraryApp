@@ -8,6 +8,7 @@ use App\Http\Controllers\Admin\DashboardAdminController;
 use App\Http\Controllers\Admin\UserManagementController;
 use App\Http\Controllers\Admin\BookController;
 use App\Http\Controllers\User\DashboardController;
+use App\Http\Controllers\Admin\CategoryController;
 
 
 Route::get('/', function () {
@@ -49,12 +50,15 @@ Route::post('/admin/users/{id}/deactivate', [App\Http\Controllers\Admin\UserMana
 Route::prefix('admin')->middleware(['auth', 'role:admin'])->group(function () {
     Route::resource('books', BookController::class);
     Route::post('/books/{id}/add-stock', [BookController::class, 'addStock'])->name('books.addStock');
+
+    Route::resource('categories', CategoryController::class);
+
 });
 
 
-Route::post('/test', function () {
-    dd('TEMBUS');
-});
+// Route::post('/test', function () {
+//     dd('TEMBUS');
+// });
 
 
 

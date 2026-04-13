@@ -14,17 +14,17 @@
         
         <div class="bg-white shadow rounded p-4">
             <p class="text-sm text-gray-500">Total User</p>
-            <h2 class="text-xl font-bold">-</h2>
+            <h2 class="text-xl font-bold">{{ $totalUser }}</h2>
         </div>
 
         <div class="bg-white shadow rounded p-4">
             <p class="text-sm text-gray-500">User Active</p>
-            <h2 class="text-xl font-bold">-</h2>
+            <h2 class="text-xl font-bold">{{ $userActive }}</h2>
         </div>
 
         <div class="bg-white shadow rounded p-4">
             <p class="text-sm text-gray-500">User Non Active</p>
-            <h2 class="text-xl font-bold">-</h2>
+            <h2 class="text-xl font-bold">{{ $userNonActive }}</h2>
         </div>
 
     </div>
