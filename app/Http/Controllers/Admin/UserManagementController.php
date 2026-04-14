@@ -42,4 +42,30 @@ class UserManagementController extends Controller
 
     return back()->with('success', 'User berhasil di-nonaktifkan');
     }
+
+    public function store(Request $request) {
+        $request->validate([
+            'name' => 'required',
+            'email' => 'required|email|unique:users,email',
+            'nisn' => 'required|digits:10|unique:users,nisn',
+            'password' => 'required|min:6',
+        ]);
+
+        \App\Models\User::create([
+            'name' => $request->name,
+            'email' => $request->email,
+            'nisn' => $request->nisn,
+            'password' => bcrypt($request->password),
+            'role' => 'user',
+            'status' => 'active',
+        ]);
+
+        return redirect()->route('admin.users.index')
+        ->with('success', 'User successfully added');
+    }
+
+    public function create() {
+        return view('admin.users.create');
+    }
+
 }

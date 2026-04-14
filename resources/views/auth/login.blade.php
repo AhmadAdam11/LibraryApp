@@ -73,10 +73,10 @@
 
             </form>
 
-            <p class="mt-8 text-sm text-gray-600">
+            <!-- <p class="mt-8 text-sm text-gray-600">
                 Don't have an account?
                 <a href="/register" class="text-blue-500 font-bold hover:underline ml-1">Sign Up</a>
-            </p>
+            </p> -->
         </div>
 
         <div class="flex-1 flex justify-center items-center">

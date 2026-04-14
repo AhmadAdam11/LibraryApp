@@ -15,8 +15,8 @@ Route::get('/', function () {
     return view('welcome');
 });
 
-Route::get('/register', [AuthController::class, 'showRegister']);
-Route::post('/register', [AuthController::class, 'register']);
+// Route::get('/register', [AuthController::class, 'showRegister']);
+// Route::post('/register', [AuthController::class, 'register']);
 // Route::get('/activate/{token}', [AuthController::class, 'activate']);
 
 Route::get('/login', [AuthController::class, 'showLogin'])->name('login');
@@ -35,29 +35,39 @@ Route::prefix('super-admin')->middleware(['auth', 'role:super_admin'])->group(fu
 
 
 //Admin
-Route::get('/admin/dashboard', [DashboardAdminController::class, 'index'])
-->middleware(['auth', 'role:admin']);
-
-Route::get('/admin/users', [UserManagementController::class, 'index'])
-    ->middleware(['auth', 'role:admin']);
-
-Route::post('/admin/users/{id}/activate', [UserManagementController::class, 'activate'])
-    ->middleware(['auth', 'role:admin']);
-
-Route::post('/admin/users/{id}/deactivate', [App\Http\Controllers\Admin\UserManagementController::class, 'deactivate'])
-    ->middleware(['auth', 'role:admin']);
-
 Route::prefix('admin')->middleware(['auth', 'role:admin'])->group(function () {
+
+    // Dashboard
+    Route::get('/dashboard', [DashboardAdminController::class, 'index'])
+        ->name('admin.dashboard');
+
+    // User Management
+    Route::get('/users', [UserManagementController::class, 'index'])
+        ->name('admin.users.index');
+
+    Route::get('/users/create', [UserManagementController::class, 'create'])
+        ->name('admin.users.create');
+
+    Route::post('/users', [UserManagementController::class, 'store'])
+        ->name('admin.users.store');
+
+    Route::post('/users/{id}/activate', [UserManagementController::class, 'activate'])
+        ->name('admin.users.activate');
+
+    Route::post('/users/{id}/deactivate', [UserManagementController::class, 'deactivate'])
+        ->name('admin.users.deactivate');
+
+    // Books
     Route::resource('books', BookController::class);
-    Route::post('/books/{id}/add-stock', [BookController::class, 'addStock'])->name('books.addStock');
+    Route::post('/books/{id}/add-stock', [BookController::class, 'addStock'])
+        ->name('books.addStock');
 
+    // Categories
     Route::resource('categories', CategoryController::class);
-
 });
 
-
 // Route::post('/test', function () {
-//     dd('TEMBUS');
+//     dd('BISMILLAH ADA');
 // });
 
 

@@ -62,25 +62,25 @@ class AuthController extends Controller
         return view('auth.register');
     }
 
-    public function register(Request $request) {
-        $request->validate([
-            'name' => 'required',
-            'email' => 'required|email|unique:users',
-            'password' => 'required|min:6',
-            'nisn' => 'required|numeric|digits:10|unique:users'
-        ]);
+    // public function register(Request $request) {
+    //     $request->validate([
+    //         'name' => 'required',
+    //         'email' => 'required|email|unique:users',
+    //         'password' => 'required|min:6',
+    //         'nisn' => 'required|numeric|digits:10|unique:users'
+    //     ]);
 
-        $user = User::create([
-            'name' => $request->name,
-            'email' => $request->email,
-            'password' => bcrypt($request->password),
-            'role' => 'user',
-            'status' => 'non-active',
-            'nisn' => $request->nisn,
-        ]);
+    //     $user = User::create([
+    //         'name' => $request->name,
+    //         'email' => $request->email,
+    //         'password' => bcrypt($request->password),
+    //         'role' => 'user',
+    //         'status' => 'non-active',
+    //         'nisn' => $request->nisn,
+    //     ]);
 
 
-        return redirect('/login')->with('success', 'Account successfully created. Please wait for admin approval.');
-    }
+    //     return redirect('/login')->with('success', 'Account successfully created. Please wait for admin approval.');
+    // }
 
 }
