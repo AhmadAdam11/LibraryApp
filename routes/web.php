@@ -7,7 +7,8 @@ use App\Http\Controllers\SuperAdmin\AdminManagementController;
 use App\Http\Controllers\Admin\DashboardAdminController;
 use App\Http\Controllers\Admin\UserManagementController;
 use App\Http\Controllers\Admin\BookController;
-use App\Http\Controllers\User\DashboardController;
+use App\Http\Controllers\User\HomePageController;
+use App\Http\Controllers\User\DetailBookController;
 use App\Http\Controllers\Admin\CategoryController;
 
 
@@ -66,13 +67,11 @@ Route::prefix('admin')->middleware(['auth', 'role:admin'])->group(function () {
     Route::resource('categories', CategoryController::class);
 });
 
-// Route::post('/test', function () {
-//     dd('BISMILLAH ADA');
-// });
-
 
 
 //users
-
-Route::get('/user/dashboard', [DashboardController::class, 'index'])
-->middleware(['auth', 'role:user']);
+Route::middleware(['auth', 'role:user'])->group(function () {
+    Route::get('/user/home', [HomePageController::class, 'index'])->name('user.home');
+    
+    Route::get('/user/books/{id}', [DetailBookController::class, 'show'])->name('user.books.show');
+});

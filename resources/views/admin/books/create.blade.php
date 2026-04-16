@@ -45,6 +45,11 @@
                 <input type="number" name="publish_year"
                        class="w-full border border-gray-300 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition">
             </div>
+            <div>
+                <label class="block mb-1.5 text-sm font-medium text-gray-700">Description</label>
+                <input type="text" name="description"
+                       class="w-full border border-gray-300 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition">
+            </div>
 
             <div>
                 <label class="block mb-1.5 text-sm font-medium text-gray-700">Stock</label>

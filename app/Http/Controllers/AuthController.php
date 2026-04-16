@@ -38,7 +38,7 @@ class AuthController extends Controller
             $redirectMap = [
                 'super_admin' => '/super-admin/dashboard',
                 'admin' => '/admin/dashboard',
-                'user' => '/user/dashboard',
+                'user' => '/user/home',
             ];
 
             return redirect($redirectMap[$user->role] ?? '/login');

@@ -29,6 +29,7 @@ class BookController extends Controller
             'author' => 'required',
             'publisher' => 'required',
             'publish_year' => 'required|digits:4',
+            'description' => 'nullable',
             'category_id' => 'required|exists:categories,id',
             'cover' => 'nullable|image|mimes:jpg,jpeg,png|max:2048',
             'stock' => 'required|integer|min:1',
@@ -72,6 +73,7 @@ class BookController extends Controller
             'author' => 'required',
             'publisher' => 'required',
             'publish_year' => 'required|digits:4',
+            'description' => 'nullable',
             'category_id' => 'required|exists:categories,id',
             'cover' => 'nullable|image|mimes:jpg,jpeg,png|max:2048',
         ]);
