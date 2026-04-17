@@ -10,6 +10,8 @@ use App\Http\Controllers\Admin\BookController;
 use App\Http\Controllers\User\HomePageController;
 use App\Http\Controllers\User\DetailBookController;
 use App\Http\Controllers\Admin\CategoryController;
+use App\Http\Controllers\User\LoanController as UserLoanController;
+use App\Http\Controllers\Admin\LoanController as AdminLoanController;
 
 
 Route::get('/', function () {
@@ -65,6 +67,13 @@ Route::prefix('admin')->middleware(['auth', 'role:admin'])->group(function () {
 
     // Categories
     Route::resource('categories', CategoryController::class);
+    Route::get('/loans', [AdminLoanController::class, 'index'])
+        ->name('admin.loans');
+
+    Route::post('/loans/{id}/approve', [AdminLoanController::class, 'approve'])
+        ->name('admin.loans.approve');
+    Route::post('/loans/{id}/reject', [AdminLoanController::class, 'reject'])
+    ->name('admin.loans.reject');
 });
 
 
@@ -72,6 +81,8 @@ Route::prefix('admin')->middleware(['auth', 'role:admin'])->group(function () {
 //users
 Route::middleware(['auth', 'role:user'])->group(function () {
     Route::get('/user/home', [HomePageController::class, 'index'])->name('user.home');
-    
     Route::get('/user/books/{id}', [DetailBookController::class, 'show'])->name('user.books.show');
+    Route::get('/loans/create/{bookId}', [UserLoanController::class, 'create'])->name('loans.create');
+    Route::post('/loans', [UserLoanController::class, 'store'])->name('loans.store');
+    Route::get('/my-loans', [UserLoanController::class, 'index'])->name('user.loans');
 });

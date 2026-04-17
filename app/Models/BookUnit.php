@@ -16,4 +16,7 @@ class BookUnit extends Model
     {
         return $this->belongsTo(Book::class);
     }
+    public function loan() {
+            return $this->hasOne(Loan::class);
+        }
 }

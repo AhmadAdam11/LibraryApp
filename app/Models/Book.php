@@ -28,5 +28,8 @@ class Book extends Model
     public function rating() {
         return $this->hasMany(Rating::class);
     }
+    public function loans() {
+        return $this->hasMany(Loan::class);
+    }
 
 }
