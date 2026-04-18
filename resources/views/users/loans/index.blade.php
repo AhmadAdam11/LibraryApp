@@ -1,53 +1,91 @@
 @extends('layouts.user')
 
 @section('content')
-<div class="max-w-5xl mx-auto mt-10">
+<div class="container mx-auto px-6 py-8">
 
-    <h2 class="text-2xl font-bold text-white mb-6">My Loans</h2>
+    <div class="flex items-center justify-between mb-5">
+        <h1 class="text-base font-medium text-gray-800">My Loans</h1>
+    </div>
 
-    {{-- Success Message --}}
     @if(session('success'))
-        <div class="bg-green-500 text-white p-3 rounded mb-4">
+        <div class="bg-green-50 text-green-700 border border-green-200 text-xs px-4 py-3 rounded-lg mb-4">
             {{ session('success') }}
         </div>
     @endif
 
-    <div class="bg-gray-900 rounded-2xl border border-gray-700 overflow-hidden">
-        <table class="w-full text-left text-white">
-            <thead class="bg-gray-800 text-gray-400">
-                <tr>
-                    <th class="p-4">Book</th>
-                    <th class="p-4">Due Date</th>
-                    <th class="p-4">Status</th>
+    <div class="border border-gray-200 rounded-xl overflow-hidden">
+        <table class="min-w-full text-xs" style="table-layout: fixed;">
+            <colgroup>
+                <col style="width: auto;">   {{-- Book --}}
+                <col style="width: 140px;">  {{-- Due Date --}}
+                <col style="width: 110px;">  {{-- Status --}}
+            </colgroup>
+
+            <thead>
+                <tr class="bg-gray-50 border-b border-gray-200">
+                    <th class="px-3 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Book</th>
+                    <th class="px-3 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Due Date</th>
+                    <th class="px-3 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Status</th>
                 </tr>
             </thead>
-            <tbody>
+
+            <tbody class="bg-white divide-y divide-gray-100">
                 @forelse($loans as $loan)
-                    <tr class="border-t border-gray-700 hover:bg-gray-800 transition">
-                        <td class="p-4">
+                <tr class="hover:bg-gray-50 transition align-middle">
+
+                    {{-- Book --}}
+                    <td class="px-3 py-3">
+                        <span class="font-medium text-gray-800 block truncate" title="{{ $loan->book->title }}">
                             {{ $loan->book->title }}
-                        </td>
-                        <td class="p-4">
-                            {{ $loan->due_date }}
-                        </td>
-                        <td class="p-4">
-                            <span class="px-3 py-1 rounded text-sm
-                                @if($loan->status == 'pending') bg-yellow-500
-                                @elseif($loan->status == 'approved') bg-green-500
-                                @elseif($loan->status == 'rejected') bg-red-500
-                                @elseif($loan->status == 'returned') bg-blue-500
+                        </span>
+                    </td>
+
+                    {{-- Due Date --}}
+                    <td class="px-3 py-3 text-gray-600">
+                        {{ \Carbon\Carbon::parse($loan->due_date)->format('d M Y') }}
+                    </td>
+
+                    {{-- Status --}}
+                        <td class="px-3 py-3 space-y-2">
+
+                            <span class="inline-block text-xs px-2 py-0.5 rounded-full border font-medium
+                                @if($loan->status == 'pending')
+                                    bg-yellow-50 text-yellow-700 border-yellow-200
+                                @elseif($loan->status == 'approved')
+                                    bg-green-50 text-green-700 border-green-200
+                                @elseif($loan->status == 'rejected')
+                                    bg-red-50 text-red-700 border-red-200
+                                @elseif($loan->status == 'pending_return')
+                                    bg-purple-50 text-purple-700 border-purple-200
+                                @elseif($loan->status == 'returned')
+                                    bg-blue-50 text-blue-700 border-blue-200
                                 @endif
                             ">
-                                {{ ucfirst($loan->status) }}
+                                {{ str_replace('_', ' ', ucfirst($loan->status)) }}
                             </span>
+
+                            @if($loan->status == 'approved')
+                                <a href="{{ route('user.loans.return.form', $loan->id) }}"
+                                class="block text-center text-xs px-2 py-1 rounded-lg bg-gray-900 text-white hover:bg-gray-700 transition">
+                                    Return
+                                </a>
+                            @endif
+
+                            @if($loan->status == 'pending_return')
+                                <span class="block text-center text-[10px] text-gray-500">
+                                    Waiting for approval
+                                </span>
+                            @endif
+
                         </td>
-                    </tr>
+
+                </tr>
                 @empty
-                    <tr>
-                        <td colspan="3" class="p-4 text-center text-gray-400">
-                            No loans yet.
-                        </td>
-                    </tr>
+                <tr>
+                    <td colspan="3" class="text-center py-10 text-gray-400 text-sm">
+                        No loans yet.
+                    </td>
+                </tr>
                 @endforelse
             </tbody>
         </table>

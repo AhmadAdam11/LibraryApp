@@ -85,4 +85,6 @@ Route::middleware(['auth', 'role:user'])->group(function () {
     Route::get('/loans/create/{bookId}', [UserLoanController::class, 'create'])->name('loans.create');
     Route::post('/loans', [UserLoanController::class, 'store'])->name('loans.store');
     Route::get('/my-loans', [UserLoanController::class, 'index'])->name('user.loans');
+    Route::get('/user/loans/{id}/return', [UserLoanController::class, 'returnForm'])->name('user.loans.return.form');
+    Route::post('/user/loans/{id}/return', [UserLoanController::class, 'submitReturn'])->name('user.loans.return.submit');
 });

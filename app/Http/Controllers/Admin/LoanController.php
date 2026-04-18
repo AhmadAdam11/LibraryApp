@@ -34,7 +34,7 @@ class LoanController extends Controller
         }
 
         $unit->update([
-            'status' => 'borowwed'
+            'status' => 'borrowed'
         ]);
 
         $loan->update([
