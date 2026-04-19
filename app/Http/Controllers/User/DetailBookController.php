@@ -9,8 +9,7 @@ class DetailBookController extends Controller
 {
     public function show($id)
     {
-        $book = Book::with('category')->findOrFail($id);
-
+        $book = Book::with(['category', 'rating.user'])->findOrFail($id);
         $totalStock = $book->bookUnits()->count();
 
         $availableStock = $book->bookUnits()

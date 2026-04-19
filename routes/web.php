@@ -12,6 +12,7 @@ use App\Http\Controllers\User\DetailBookController;
 use App\Http\Controllers\Admin\CategoryController;
 use App\Http\Controllers\User\LoanController as UserLoanController;
 use App\Http\Controllers\Admin\LoanController as AdminLoanController;
+use App\Http\Controllers\FavoriteController;
 
 
 Route::get('/', function () {
@@ -74,6 +75,8 @@ Route::prefix('admin')->middleware(['auth', 'role:admin'])->group(function () {
         ->name('admin.loans.approve');
     Route::post('/loans/{id}/reject', [AdminLoanController::class, 'reject'])
     ->name('admin.loans.reject');
+    Route::post('/admin/loans/{id}/approve-return', [AdminLoanController::class, 'approveReturn'])->name('admin.loans.approveReturn');
+    Route::post('/admin/loans/{id}/reject-return', [AdminLoanController::class, 'rejectReturn'])->name('admin.loans.rejectReturn');
 });
 
 
@@ -87,4 +90,9 @@ Route::middleware(['auth', 'role:user'])->group(function () {
     Route::get('/my-loans', [UserLoanController::class, 'index'])->name('user.loans');
     Route::get('/user/loans/{id}/return', [UserLoanController::class, 'returnForm'])->name('user.loans.return.form');
     Route::post('/user/loans/{id}/return', [UserLoanController::class, 'submitReturn'])->name('user.loans.return.submit');
+    Route::get('/my-favorite', [FavoriteController::class,'index'])->name('user.favorite');
 });
+
+Route::post('/favorites/{bookId}', [FavoriteController::class, 'toggle'])
+    ->name('favorites.toggle')
+    ->middleware('auth');

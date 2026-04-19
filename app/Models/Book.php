@@ -31,5 +31,15 @@ class Book extends Model
     public function loans() {
         return $this->hasMany(Loan::class);
     }
+    public function getAverageRatingAttribute() {
+        return round($this->rating()->avg('rating'), 1);
+    }
+
+    public function getTotalReviewsAttribute() {
+        return $this->rating()->count();
+    }
+    public function favorites() {
+        return $this->hasMany(Favorite::class);
+    }
 
 }

@@ -66,6 +66,18 @@
                     {{ $book->title }}
                 </h3>
                 <p class="text-[10px] text-indigo-400 mb-1">{{ $book->category->name ?? '-' }}</p>
+            <div class="flex items-center gap-[2px] text-[10px] mb-1">
+                @for($i = 1; $i <= 5; $i++)
+                    @if($i <= floor($book->average_rating))
+                        <span class="text-yellow-400">★</span>
+                    @else
+                        <span class="text-gray-600">☆</span>
+                    @endif
+                @endfor
+                <span class="text-gray-500 ml-1">
+                    ({{ $book->total_reviews }})
+                </span>
+            </div>
                 <p class="text-[10px] text-gray-500 mb-3">
                     Stok: <span class="font-bold {{ $stock > 0 ? 'text-emerald-400' : 'text-red-400' }}">{{ $stock }}</span>
                 </p>

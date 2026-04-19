@@ -6,6 +6,8 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\Loan;
 use App\Models\BookUnit;
+use Carbon\Carbon;
+
 
 class LoanController extends Controller
 {
@@ -58,6 +60,44 @@ class LoanController extends Controller
         ]);
 
         return back()->with('success', 'Loan rejected.');
+    }
+   public function approveReturn(Request $request, $id) {
+        $loan = Loan::with('bookUnit')->findOrFail($id);
+
+        if ($loan->status !== 'pending_return') {
+            return redirect()->back()->with('error', 'Invalid action.');
+        }
+
+        // 🔥 ambil dari input admin
+        $fine = $request->fine ?? 0;
+
+        // optional: paksa integer biar aman
+        $fine = (int) $fine;
+
+        $loan->status = 'returned';
+        $loan->returned_at = now();
+        $loan->fine = $fine;
+        $loan->save();
+
+        if ($loan->bookUnit) {
+            $loan->bookUnit->status = 'available';
+            $loan->bookUnit->save();
+        }
+
+        return redirect()->back()->with('success', 'Return approved. Fine: Rp ' . number_format($fine));
+    }
+
+    public function rejectReturn($id) {
+        $loan = \App\Models\Loan::findOrFail($id);
+
+        if ($loan->status !== 'pending_return') {
+            return redirect()->back()->with('error', 'Invalid action.');
+        }
+
+        $loan->status = 'approved';
+        $loan->save();
+
+        return redirect()->back()->with('success', 'Return rejected.');
     }
 
 }

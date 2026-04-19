@@ -26,6 +26,8 @@
                     <th class="px-3 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Book</th>
                     <th class="px-3 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Due Date</th>
                     <th class="px-3 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Status</th>
+                    <th class="px-3 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Fine</th>
+                    
                 </tr>
             </thead>
 
@@ -77,6 +79,15 @@
                                 </span>
                             @endif
 
+                        </td>
+                        <td>
+                            @if($loan->fine > 0)
+                                <span class="text-red-500 font-medium">
+                                    Rp {{ number_format($loan->fine) }}
+                                </span>
+                            @else
+                                <span class="text-gray-400 text-xs">-</span>
+                            @endif
                         </td>
 
                 </tr>
