@@ -10,8 +10,7 @@
 
 <div class="flex min-h-screen">
 
-    <aside class="relative w-60 bg-gradient-to-b from-gray-900 to-gray-800 text-white shadow-xl flex flex-col">
-
+    <aside class="sticky top-0 h-screen w-60 bg-gradient-to-b from-gray-900 to-gray-800 text-white shadow-xl flex flex-col">
         <!-- Header -->
         <div class="p-5 border-b border-gray-700">
             <h2 class="text-xl font-bold text-white flex items-center gap-2">
@@ -101,6 +100,6 @@
     </main>
 
 </div>
-
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 </body>
 </html>

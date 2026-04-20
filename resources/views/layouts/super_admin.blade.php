@@ -8,10 +8,8 @@
 </head>
 <body class="bg-gray-50">
 
-<div class="flex min-h-screen">
-
-    <aside class="w-60 bg-gradient-to-b from-gray-900 to-gray-800 text-white shadow-xl flex flex-col">
-
+<div class="flex h-screen overflow-hidden">
+<aside class="w-60 h-full bg-gradient-to-b from-gray-900 to-gray-800 text-white shadow-xl flex flex-col">
         <!-- Header -->
         <div class="p-5 border-b border-gray-700">
             <h2 class="text-xl font-bold text-white flex items-center gap-2">

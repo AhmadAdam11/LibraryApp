@@ -17,18 +17,18 @@
         </div>
     @endif
 
-    <div class="border border-gray-200 rounded-xl overflow-hidden">
-        <table class="min-w-full text-xs" style="table-layout: fixed;">
+    <div class="border border-gray-200 rounded-xl overflow-hidden overflow-x-auto">
+        <table class="text-xs" style="table-layout: fixed; min-width: 860px; width: 100%;">
             <colgroup>
-                <col style="width: 52px;">   
-                <col style="width: 140px;"> 
-                <col style="width: 110px;">  
-                <col style="width: 90px;">  
-                <col style="width: 52px;">   
-                <col style="width: 170px;"> 
-                <col style="width: 80px;">  
-                <col style="width: 90px;">   
-                <col style="width: 100px;">  
+                <col style="width: 52px;">
+                <col style="width: 140px;">
+                <col style="width: 110px;">
+                <col style="width: 90px;">
+                <col style="width: 52px;">
+                <col style="width: 170px;">
+                <col style="width: 80px;">
+                <col style="width: 90px;">
+                <col style="width: 120px;">
             </colgroup>
 
             <thead>
@@ -94,7 +94,6 @@
                         </div>
                     </td>
 
-                   
                     <td class="px-3 py-3 text-center">
                         <span class="font-medium {{ $available === 0 ? 'text-red-500' : 'text-green-600' }}">
                             {{ $available }}

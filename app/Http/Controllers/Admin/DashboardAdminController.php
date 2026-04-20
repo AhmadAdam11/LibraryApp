@@ -3,27 +3,35 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
-use Illuminate\Http\Request;
 use App\Models\User;
+use App\Models\Book;
 
 class DashboardAdminController extends Controller
 {
-    public function index() {
+    public function index()
+    {
+        $totalUser = User::count();
+        $userActive = User::where('status', 'active')->count();
+        $userNonActive = User::where('status', 'non-active')->count();
 
-        $totalUser = User::where('role', 'user')->count();
+        $totalBook = Book::count();
 
-        $userActive = User::where('role', 'user')
-            ->where('status', 'active')
-            ->count();
+        $userChart = [
+            'Active' => $userActive,
+            'Non Active' => $userNonActive,
+        ];
 
-        $userNonActive = User::where('role', 'user')
-            ->where('status', 'non-active')
-            ->count();
+        $bookChart = [
+            'Total Buku' => $totalBook,
+        ];
 
-        return view("admin.dashboard", compact(
+        return view('admin.dashboard', compact(
             'totalUser',
             'userActive',
-            'userNonActive'
+            'userNonActive',
+            'totalBook',
+            'userChart',
+            'bookChart'
         ));
     }
 }
