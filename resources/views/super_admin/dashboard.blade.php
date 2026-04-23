@@ -36,7 +36,16 @@
             <h2 class="text-xl font-semibold text-blue-600 mt-1">{{ $totalBook }}</h2>
         </div>
 
-        {{-- EXTRA KHUSUS SUPER ADMIN --}}
+        <div class="bg-white border rounded-lg p-4">
+            <p class="text-xs text-gray-400">Borrowed Book</p>
+            <h2 class="text-xl font-semibold text-orange-600 mt-1">{{ $bookBorrowed }}</h2>
+        </div>
+
+        <div class="bg-white border rounded-lg p-4">
+            <p class="text-xs text-gray-400">Available Book</p>
+            <h2 class="text-xl font-semibold text-teal-600 mt-1">{{ $bookAvailable }}</h2>
+        </div>
+
         <div class="bg-white border rounded-lg p-4">
             <p class="text-xs text-gray-400">Total Admin</p>
             <h2 class="text-xl font-semibold text-purple-600 mt-1">{{ $totalAdmin }}</h2>
@@ -58,10 +67,10 @@
             <canvas id="userChart" style="max-height:200px"></canvas>
         </div>
 
-        {{-- ROLE DISTRIBUTION --}}
+        {{-- BOOK STATUS --}}
         <div class="bg-white border rounded-lg p-4">
-            <h2 class="text-sm text-gray-500 mb-3">Role Distribution</h2>
-            <canvas id="roleChart" style = "max-height:200px"></canvas>
+            <h2 class="text-sm text-gray-500 mb-3">Book Status</h2>
+            <canvas id="bookChart" style="max-height:200px"></canvas>
         </div>
 
     </div>
@@ -73,7 +82,7 @@
 
 <script>
     const userData = @json($userChart);
-    const roleData = @json($roleChart);
+    const bookData = @json($bookChart);
 
     new Chart(document.getElementById('userChart'), {
         type: 'bar',
@@ -91,17 +100,18 @@
         }
     });
 
-    new Chart(document.getElementById('roleChart'), {
-        type: 'doughnut',
+    new Chart(document.getElementById('bookChart'), {
+        type: 'bar',
         data: {
-            labels: Object.keys(roleData),
+            labels: Object.keys(bookData),
             datasets: [{
-                data: Object.values(roleData),
-                backgroundColor: ['#7c3aed', '#f97316']
+                data: Object.values(bookData),
+                backgroundColor: ['#ea580c', '#0d9488'],
+                borderRadius: 4
             }]
         },
         options: {
-            cutout: '65%',
+            plugins: { legend: { display: false } },
             responsive: true
         }
     });

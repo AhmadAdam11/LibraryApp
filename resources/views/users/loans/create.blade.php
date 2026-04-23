@@ -46,7 +46,6 @@
                 <input
                     type="date"
                     name="due_date"
-                    min="{{ now()->addDay()->format('Y-m-d') }}"
                     class="w-full px-4 py-3 text-sm text-gray-800 bg-white border border-gray-200 rounded-xl focus:outline-none focus:border-gray-400 transition-colors duration-150"
                     required
                 >

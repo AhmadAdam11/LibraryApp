@@ -133,25 +133,45 @@
                             @php
                                 $today      = \Carbon\Carbon::now();
                                 $due        = \Carbon\Carbon::parse($loan->due_date);
-                                $lateDays   = $today->greaterThan($due) ? $due->diffInDays($today) : 0;
-                                $defaultFine = $lateDays * 5000;
+                                $lateDays   = $today->greaterThan($due) ? intval(floor($due->diffInDays($today))) : 0;
+                                $defaultFine = intval($lateDays * 5000);
                             @endphp
 
                             <div class="flex flex-col gap-2">
                                 <form action="{{ route('admin.loans.approveReturn', $loan->id) }}" method="POST">
                                     @csrf
-                                    <div class="flex flex-col gap-1.5">
-                                        <label class="text-xs text-gray-400 uppercase tracking-wide" style="font-size:9px;">Fine (Rp)</label>
-                                        <div class="flex items-center gap-2">
-                                            <input type="number" name="fine"
-                                                value="{{ $defaultFine }}"
-                                                class="w-24 px-2 py-1.5 text-xs border border-gray-200 rounded-lg focus:outline-none focus:ring-1 focus:ring-gray-300"
-                                                min="0">
-                                            <button class="text-xs px-3 py-1.5 rounded-lg border border-green-200 bg-white text-green-600 hover:bg-green-50 font-medium transition-colors whitespace-nowrap">
-                                                Approve
-                                            </button>
-                                        </div>
-                                    </div>
+                                   <div class="flex flex-col gap-2">
+
+                             {{-- Fine --}}
+                            <div>
+                                <label class="text-xs text-gray-400 uppercase tracking-wide" style="font-size:9px;">
+                                    Fine (Rp)
+                                </label>
+                                <div class="flex items-center gap-2">
+                                    <input type="number" name="fine"
+                                        value="{{ $defaultFine }}"
+                                        class="w-24 px-2 py-1.5 text-xs border border-gray-200 rounded-lg focus:outline-none focus:ring-1 focus:ring-gray-300"
+                                        min="0">
+                                </div>
+                            </div>
+
+                            {{-- Reason --}}
+                            <div>
+                                <label class="text-xs text-gray-400 uppercase tracking-wide" style="font-size:9px;">
+                                    Reason
+                                </label>
+                                <textarea name="fine_reason"
+                                    class="w-full px-2 py-1.5 text-xs border border-gray-200 rounded-lg focus:outline-none focus:ring-1 focus:ring-gray-300"
+                                    rows="2"
+                                >{{ $lateDays > 0 ? 'Terlambat ' . $lateDays . ' hari' : '' }}</textarea>
+                            </div>
+
+                            {{-- Approve Button --}}
+                            <button class="text-xs px-3 py-1.5 rounded-lg border border-green-200 bg-white text-green-600 hover:bg-green-50 font-medium transition-colors whitespace-nowrap">
+                                Approve
+                            </button>
+
+                        </div>
                                 </form>
 
                                 <form action="{{ route('admin.loans.rejectReturn', $loan->id) }}" method="POST">

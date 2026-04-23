@@ -29,6 +29,7 @@
                     <th class="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Due Date</th>
                     <th class="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Status</th>
                     <th class="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Fine</th>
+                    <th class="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Fine Reason</th>
                     <th class="px-4 py-3 text-center text-xs font-medium text-gray-500 uppercase tracking-wider">Action</th>
                 </tr>
             </thead>
@@ -67,6 +68,15 @@
                     <td class="px-4 py-3">
                         @if($loan->fine > 0)
                             <span class="text-red-500 font-medium">Rp {{ number_format($loan->fine) }}</span>
+                        @else
+                            <span class="text-gray-400">-</span>
+                        @endif
+                    </td>
+
+                    {{-- Fine Reason --}}
+                    <td class="px-4 py-3">
+                        @if($loan->fine_reason)
+                            <span class="text-sm text-gray-600">{{ $loan->fine_reason }}</span>
                         @else
                             <span class="text-gray-400">-</span>
                         @endif

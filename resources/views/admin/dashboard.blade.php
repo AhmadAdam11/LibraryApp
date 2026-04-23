@@ -26,8 +26,19 @@
             <h2 class="text-[22px] font-medium text-red-500 mt-1">{{ $userNonActive }}</h2>
         </div>
         <div class="bg-white border border-gray-100 rounded-lg p-3">
-            <p class="text-[11px] uppercase tracking-wide text-gray-400">Total Buku</p>
+            <p class="text-[11px] uppercase tracking-wide text-gray-400">Total Books</p>
             <h2 class="text-[22px] font-medium text-blue-600 mt-1">{{ $totalBook }}</h2>
+        </div>
+    </div>
+
+    <div class="grid grid-cols-2 gap-2.5 mb-5">
+        <div class="bg-white border border-gray-100 rounded-lg p-3">
+            <p class="text-[11px] uppercase tracking-wide text-gray-400">Borrowed Book</p>
+            <h2 class="text-[22px] font-medium text-orange-600 mt-1">{{ $bookBorrowed }}</h2>
+        </div>
+        <div class="bg-white border border-gray-100 rounded-lg p-3">
+            <p class="text-[11px] uppercase tracking-wide text-gray-400">Available Book</p>
+            <h2 class="text-[22px] font-medium text-teal-600 mt-1">{{ $bookAvailable }}</h2>
         </div>
     </div>
 
@@ -38,8 +49,8 @@
             <canvas id="userChart" style="max-height:180px"></canvas>
         </div>
         <div class="bg-white border border-gray-100 rounded-lg p-4">
-            <h2 class="text-[13px] font-medium text-gray-500 mb-3">User Distribution</h2>
-            <canvas id="userPieChart" style="max-height:180px"></canvas>
+            <h2 class="text-[13px] font-medium text-gray-500 mb-3">Book Status</h2>
+            <canvas id="bookChart" style="max-height:180px"></canvas>
         </div>
     </div>
 
@@ -48,7 +59,9 @@
 <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 <script>
     const userData = @json($userChart);
+    const bookData = @json($bookChart);
     const colors = ['#480b46', '#346315'];
+    const bookColors = ['#ea580c', '#0d9488'];
 
     new Chart(document.getElementById('userChart'), {
         type: 'bar',
@@ -72,20 +85,24 @@
         }
     });
 
-    new Chart(document.getElementById('userPieChart'), {
-        type: 'doughnut',
+    new Chart(document.getElementById('bookChart'), {
+        type: 'bar',
         data: {
-            labels: Object.keys(userData),
-            datasets: [{ data: Object.values(userData), backgroundColor: colors, borderWidth: 0 }]
+            labels: Object.keys(bookData),
+            datasets: [{
+                label: 'Status Buku',
+                data: Object.values(bookData),
+                backgroundColor: bookColors,
+                borderRadius: 4,
+                borderWidth: 0
+            }]
         },
         options: {
             responsive: true,
-            cutout: '65%',
-            plugins: {
-                legend: {
-                    position: 'bottom',
-                    labels: { font: { size: 11 }, boxWidth: 10, padding: 12 }
-                }
+            plugins: { legend: { display: false } },
+            scales: {
+                x: { grid: { display: false }, ticks: { font: { size: 11 } } },
+                y: { grid: { color: 'rgba(0,0,0,0.05)' }, ticks: { font: { size: 11 } } }
             }
         }
     });

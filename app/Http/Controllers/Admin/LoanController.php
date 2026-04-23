@@ -63,20 +63,37 @@ class LoanController extends Controller
 
         return back()->with('success', 'Loan rejected.');
     }
-   public function approveReturn(Request $request, $id) {
+    public function approveReturn(Request $request, $id) {
         $loan = Loan::with('bookUnit')->findOrFail($id);
 
         if ($loan->status !== 'pending_return') {
             return redirect()->back()->with('error', 'Invalid action.');
         }
 
-        $fine = $request->fine ?? 0;
+        $returnedAt = now();
+        $dueDate = \Carbon\Carbon::parse($loan->due_date);
 
-        $fine = (int) $fine;
+        $lateDays = 0;
+        if ($returnedAt->gt($dueDate)) {
+            $lateDays = intval(floor($dueDate->diffInDays($returnedAt)));
+        }
+
+        $calculatedFine = intval($lateDays * 5000);
+
+
+        $fine = $request->filled('fine')
+            ? (int) $request->fine
+            : $calculatedFine;
+
+        $reason = $request->filled('fine_reason')
+            ? $request->fine_reason
+            : ($lateDays > 0 ? 'Terlambat ' . $lateDays . ' hari @ Rp 5.000/hari' : null);
 
         $loan->status = 'returned';
-        $loan->returned_at = now();
+        $loan->returned_at = $returnedAt;
         $loan->fine = $fine;
+        $loan->fine_reason = $reason;
+        $loan->late_days = $lateDays;
         $loan->save();
 
         if ($loan->bookUnit) {
@@ -84,9 +101,11 @@ class LoanController extends Controller
             $loan->bookUnit->save();
         }
 
-        return redirect()->back()->with('success', 'Return approved. Fine: Rp ' . number_format($fine));
-    }
-
+        return redirect()->back()->with(
+            'success',
+            'Return approved. Late: ' . $lateDays . ' days. Fine: Rp ' . number_format($fine)
+        );
+}
     public function rejectReturn($id) {
         $loan = \App\Models\Loan::findOrFail($id);
 

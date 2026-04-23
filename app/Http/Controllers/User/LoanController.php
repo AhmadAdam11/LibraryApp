@@ -17,31 +17,40 @@ class LoanController extends Controller
 
         return view ('users.loans.create', compact('book'));
     }
-    public function store(Request $request) {
-        $request->validate([
-            'book_id' => 'required|exists:books,id',
-            'due_date' => 'required|date|after:today',
-        ]);
+   public function store(Request $request) {
+    $request->validate([
+        'book_id' => 'required|exists:books,id',
+        'due_date' => 'required|date',
+    ]);
 
-        $availableUnit = BookUnit::where('book_id', $request->book_id)
-            ->where('status', 'available')
-            ->exists();
+    $userId = auth()->id(); 
 
-        if (!$availableUnit) {
-            return back()->with('error', 'Book is not available right now.');
-        }
+    $availableUnit = BookUnit::where('book_id', $request->book_id)
+        ->where('status', 'available')
+        ->exists();
 
-
-        Loan::create([
-            'user_id' => auth()->id(),
-            'book_id' => $request->book_id,
-            'due_date' => $request->due_date,
-            'status' => 'pending',
-        ]);
-
-        return redirect()->route('user.loans')
-            ->with('success', 'Loan request submitted, waitin for approval.');
+    if (!$availableUnit) {
+        return back()->with('error', 'Book is not available right now.');
     }
+
+    $activeLoan = Loan::where('user_id', $userId)
+        ->whereIn('status', ['pending', 'approved', 'borrowed']) 
+        ->exists();
+
+    if ($activeLoan) {
+        return back()->with('error', 'You still have an active loan!');
+    }
+
+    Loan::create([
+        'user_id' => $userId,
+        'book_id' => $request->book_id,
+        'due_date' => $request->due_date,
+        'status' => 'pending',
+    ]);
+
+    return redirect()->route('user.loans')
+        ->with('success', 'Loan request submitted, waiting for approval.');
+}
     public function index() {
         $loans = Loan::with('book')
             ->where('user_id', auth()->id())
