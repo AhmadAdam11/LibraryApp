@@ -7,6 +7,8 @@ use Illuminate\Http\Request;
 use App\Models\Loan;
 use App\Models\BookUnit;
 use Carbon\Carbon;
+use App\Exports\LoansExport;
+use Maatwebsite\Excel\Facades\Excel;
 
 
 class LoanController extends Controller
@@ -68,10 +70,8 @@ class LoanController extends Controller
             return redirect()->back()->with('error', 'Invalid action.');
         }
 
-        // 🔥 ambil dari input admin
         $fine = $request->fine ?? 0;
 
-        // optional: paksa integer biar aman
         $fine = (int) $fine;
 
         $loan->status = 'returned';
@@ -98,6 +98,11 @@ class LoanController extends Controller
         $loan->save();
 
         return redirect()->back()->with('success', 'Return rejected.');
+    }
+
+    public function export()
+    {
+        return Excel::download(new LoansExport, 'loans.xlsx');
     }
 
 }

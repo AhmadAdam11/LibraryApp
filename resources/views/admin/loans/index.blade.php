@@ -4,12 +4,25 @@
 <div class="max-w-7xl mx-auto py-8 px-4">
 
     {{-- Header --}}
-    <div class="flex items-center justify-between mb-6">
-        <h2 class="text-base font-medium text-gray-900">Loan & Return Requests</h2>
+<div class="flex items-center justify-between mb-6">
+
+    <h2 class="text-base font-medium text-gray-900">Loan & Return Requests</h2>
+
+    <div class="flex items-center gap-3">
+        
+        {{-- Tombol Download Excel --}}
+        <a href="{{ route('loans.export') }}"
+           class="text-xs px-3 py-1.5 rounded-lg bg-green-600 text-white hover:bg-green-700 transition">
+            Download Excel
+        </a>
+
+        {{-- Pending --}}
         <span class="text-xs bg-gray-100 text-gray-600 border border-gray-200 rounded-full px-3 py-1">
             {{ $loans->where('status', 'pending')->count() }} pending
         </span>
+
     </div>
+</div>
 
     {{-- Alert --}}
     @if(session('success'))

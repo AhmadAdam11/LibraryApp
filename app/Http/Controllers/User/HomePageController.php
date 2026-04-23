@@ -12,11 +12,16 @@ class HomePageController extends Controller
     public function index(Request $request)
     {
         $categoryId = $request->category;
+        $search = $request->search;
 
         $books = Book::with(['category', 'bookUnits'])
             ->when($categoryId, function ($query) use ($categoryId) {
                 $query->where('category_id', $categoryId);
             })
+            ->when($search, function ($query) use ($search) {
+                $query->where('title', 'like', '%' . $search . '%');
+            })
+            ->latest()
             ->get();
 
         $categories = Category::all();

@@ -51,7 +51,7 @@
                     $available = $book->bookUnits->where('status', 'available')->count();
                     $total     = $book->bookUnits->count();
                 @endphp
-                <tr class="hover:bg-gray-50 transition align-middle">
+                <tr class="hover:bg-gray-50 transition align-middle cursor-pointer" onclick="window.location.href='{{ route('books.show', $book->id) }}'">
 
                     <td class="px-3 py-3">
                         @if($book->cover)
@@ -63,7 +63,7 @@
                     </td>
 
                     <td class="px-3 py-3">
-                        <span class="font-medium text-gray-800 block truncate" title="{{ $book->title }}">
+                        <span class="font-medium text-gray-800 block truncate text-blue-600 hover:text-blue-700" title="{{ $book->title }}">
                             {{ $book->title }}
                         </span>
                     </td>
@@ -103,7 +103,7 @@
                         <p class="text-gray-800 mt-0.5" style="font-size: 10px;">avail / total</p>
                     </td>
 
-                    <td class="px-3 py-3">
+                    <td class="px-3 py-3" onclick="event.stopPropagation()">
                         <form action="{{ route('books.addStock', $book->id) }}" method="POST"
                               class="flex items-center justify-center gap-1.5">
                             @csrf
@@ -116,7 +116,7 @@
                         </form>
                     </td>
 
-                    <td class="px-3 py-3">
+                    <td class="px-3 py-3" onclick="event.stopPropagation()">
                         <div class="flex items-center justify-center gap-1.5">
                             <a href="{{ route('books.edit', $book->id) }}"
                                class="text-xs font-medium px-3 py-1.5 rounded-lg border border-gray-200 text-gray-800 hover:bg-gray-100 transition whitespace-nowrap">

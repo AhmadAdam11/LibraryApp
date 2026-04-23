@@ -22,6 +22,11 @@ class BookController extends Controller
         return view('admin.books.create', compact('categories'));
     }
 
+    public function show($id) {
+        $book = Book::with('category', 'bookUnits')->findOrFail($id);
+        return view('admin.books.show', compact('book'));
+    }
+
     public function store(Request $request)
     {
         $request->validate([

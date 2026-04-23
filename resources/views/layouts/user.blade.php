@@ -56,8 +56,9 @@
                 Favorites
             </a>
 
-            <a href="#"
-               class="flex items-center gap-2.5 px-2.5 py-2 rounded-lg text-xs font-medium text-white/40 hover:bg-white/5 hover:text-white/80 transition-all">
+            <a href="{{ route('user.profile.show') }}"
+               class="flex items-center gap-2.5 px-2.5 py-2 rounded-lg text-xs font-medium transition-all
+               {{ request()->routeIs('user.profile.*') ? 'bg-white/10 text-white' : 'text-white/40 hover:bg-white/5 hover:text-white/80' }}">
                 <svg class="w-3.5 h-3.5 flex-shrink-0" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
                     <circle cx="12" cy="8" r="4"/><path stroke-linecap="round" d="M4 20c0-4 3.6-7 8-7s8 3 8 7"/>
                 </svg>

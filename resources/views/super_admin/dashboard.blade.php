@@ -61,7 +61,7 @@
         {{-- ROLE DISTRIBUTION --}}
         <div class="bg-white border rounded-lg p-4">
             <h2 class="text-sm text-gray-500 mb-3">Role Distribution</h2>
-            <canvas id="roleChart"></canvas>
+            <canvas id="roleChart" style = "max-height:200px"></canvas>
         </div>
 
     </div>
@@ -75,7 +75,6 @@
     const userData = @json($userChart);
     const roleData = @json($roleChart);
 
-    // USER STATUS CHART
     new Chart(document.getElementById('userChart'), {
         type: 'bar',
         data: {
@@ -92,7 +91,6 @@
         }
     });
 
-    // ROLE CHART
     new Chart(document.getElementById('roleChart'), {
         type: 'doughnut',
         data: {

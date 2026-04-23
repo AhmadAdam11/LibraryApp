@@ -48,7 +48,7 @@
 <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 <script>
     const userData = @json($userChart);
-    const colors = ['#16a34a', '#ef4444'];
+    const colors = ['#480b46', '#346315'];
 
     new Chart(document.getElementById('userChart'), {
         type: 'bar',

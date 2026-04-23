@@ -9,6 +9,17 @@
     </div>
 </div>
 
+<form method="GET" class="mb-4 flex gap-2">
+    <input type="text" name="search" value="{{ request('search') }}"
+        placeholder="Search book..."
+        class="w-full px-4 py-2 rounded-lg bg-white-500 text-gray-800 border border-gray-500
+        focus:outline-none focus:ring-2 focus:ring-indigo-500 text-sm">
+
+    <button type="submit"
+        class="px-4 py-2 bg-gray-800 hover:bg-indigo-500 text-white rounded-lg text-sm font-semibold">
+        Search
+    </button>
+</form>
 <form method="GET" id="category-form">
     <div class="flex gap-2 flex-wrap mb-6">
 
@@ -95,7 +106,7 @@
             <svg class="w-12 h-12 mx-auto mb-3 opacity-30" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24">
                 <path d="M12 6.25278V19.2528M12 6.25278C10.8321 5.47686 9.24649 5 7.5 5C5.75351 5 4.16789 5.47686 3 6.25278V19.2528C4.16789 18.4769 5.75351 18 7.5 18C9.24649 18 10.8321 18.4769 12 19.2528M12 6.25278C13.1679 5.47686 14.7535 5 16.5 5C18.2465 5 19.8321 5.47686 21 6.25278V19.2528C19.8321 18.4769 18.2465 18 16.5 18C14.7535 18 13.1679 18.4769 12 19.2528"/>
             </svg>
-            <p class="text-sm">Tidak ada buku ditemukan</p>
+            <p class="text-sm">Book not found</p>
         </div>
     @endforelse
 
